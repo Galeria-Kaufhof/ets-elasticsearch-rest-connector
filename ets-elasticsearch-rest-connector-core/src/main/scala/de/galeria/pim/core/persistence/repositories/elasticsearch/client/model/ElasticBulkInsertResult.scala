@@ -1,0 +1,25 @@
+package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model
+
+import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.indexing.BulkInsertResultItem
+import play.api.libs.json.JsObject
+
+case class ElasticBulkInsertResult(
+                                    override val hasError: Boolean = false,
+                                    override val errorMessage: String = "",
+                                    took: Long,
+                                    errors: Boolean,
+                                    items: List[BulkInsertResultItem]
+                                  ) extends ElasticResult
+
+
+object ElasticBulkInsertResult {
+
+  def apply(o: JsObject): ElasticBulkInsertResult = {
+    ElasticBulkInsertResult(
+      took = (o \ "took").as[Long],
+      errors = (o \ "errors").as[Boolean],
+      items = (o \ "items").as[List[JsObject]].map(jso => BulkInsertResultItem(jso))
+    )
+  }
+
+}

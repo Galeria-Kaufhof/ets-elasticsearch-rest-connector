@@ -12,4 +12,12 @@
     <artifactId>ets-elasticsearch-rest-connector-core</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>com.typesafe.play</groupId>
+            <artifactId>play-json_2.12</artifactId>
+            <version>2.6.9</version>
+        </dependency>
+    </dependencies>
 </project>
