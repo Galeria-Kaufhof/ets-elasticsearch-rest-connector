@@ -1,4 +1,4 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.indexing
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.indexing
 
 import play.api.libs.json.JsObject
 

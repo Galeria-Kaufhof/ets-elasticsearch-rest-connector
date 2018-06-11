@@ -1,4 +1,4 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queryTypes
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.queryTypes
 
 object ScoreMode extends Enumeration {
   type ScoreMode = Value

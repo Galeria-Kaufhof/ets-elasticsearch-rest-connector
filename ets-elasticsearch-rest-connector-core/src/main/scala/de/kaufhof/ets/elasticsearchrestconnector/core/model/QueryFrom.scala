@@ -1,4 +1,4 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.model
 
 import play.api.libs.json.{JsNumber, JsValue, Writes}
 

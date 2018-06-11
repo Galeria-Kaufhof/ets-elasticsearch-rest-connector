@@ -1,8 +1,8 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.model
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.aggregations.query.{Aggregation, ChildAggregation}
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.querySources.{BaseSourceBoolean, QueryBaseSource}
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queryTypes.Query
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.aggregations.query.{Aggregation, ChildAggregation}
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.querySources.{BaseSourceBoolean, QueryBaseSource}
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.queryTypes.Query
 import play.api.libs.json.{JsObject, Json, OWrites}
 
 case class QueryObject(

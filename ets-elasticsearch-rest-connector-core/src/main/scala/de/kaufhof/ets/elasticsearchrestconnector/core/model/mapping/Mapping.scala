@@ -1,6 +1,6 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.mapping
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.mapping
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.mapping.MappingType.MappingType
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.mapping.MappingType.MappingType
 import play.api.libs.json._
 
 case class Mapping(

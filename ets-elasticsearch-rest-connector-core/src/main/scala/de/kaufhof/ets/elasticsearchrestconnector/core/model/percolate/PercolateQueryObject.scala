@@ -1,6 +1,6 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.percolate
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.percolate
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.QueryListBool
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.QueryListBool
 import play.api.libs.json.{JsObject, Json}
 
 object PercolateQueryObject {

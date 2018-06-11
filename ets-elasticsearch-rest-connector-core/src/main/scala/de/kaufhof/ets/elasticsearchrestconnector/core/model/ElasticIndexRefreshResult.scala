@@ -1,4 +1,4 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.model
 
 case class ElasticIndexRefreshResult(
                                       override val hasError: Boolean = false,

@@ -1,8 +1,8 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queryTypes
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.queryTypes
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.filters.FilterExpression
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queries.{MatchAllQuery, QueryExpression}
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.{QueryListBool, QueryType}
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.filters.FilterExpression
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.queries.{MatchAllQuery, QueryExpression}
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.{QueryListBool, QueryType}
 import play.api.libs.json.{JsArray, JsObject, JsValue, Writes}
 
 case class BooleanQuery(query: QueryListBool = QueryListBool(), filter: List[FilterExpression] = Nil) extends QueryType

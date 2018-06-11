@@ -1,6 +1,6 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.indexing
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.indexing
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.indexing.IndexingAction.IndexingAction
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.indexing.IndexingAction.IndexingAction
 import play.api.libs.json.{JsNumber, JsObject, JsString, Json}
 
 case class DocHeader(action: IndexingAction, index: String, typ: String, id: String, parent: Option[String], routing: Option[String])

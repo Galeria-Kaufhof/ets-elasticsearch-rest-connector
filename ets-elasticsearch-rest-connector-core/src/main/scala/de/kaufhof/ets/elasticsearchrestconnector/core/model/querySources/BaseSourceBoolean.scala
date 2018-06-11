@@ -1,3 +1,3 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.querySources
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.querySources
 
 case class BaseSourceBoolean(value: Boolean = false) extends QueryBaseSource

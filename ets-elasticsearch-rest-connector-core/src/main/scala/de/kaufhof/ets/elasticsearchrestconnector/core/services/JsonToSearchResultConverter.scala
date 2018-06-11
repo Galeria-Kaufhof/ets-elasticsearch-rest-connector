@@ -1,8 +1,8 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.services
+package de.kaufhof.ets.elasticsearchrestconnector.core.services
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.ElasticSearchResult
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.aggregations.result.AggregationResults
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.hits.{ElasticSearchHits, Hit, HitSource}
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.ElasticSearchResult
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.aggregations.result.AggregationResults
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.hits.{ElasticSearchHits, Hit, HitSource}
 import play.api.libs.json._
 
 object JsonToSearchResultConverter {

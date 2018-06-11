@@ -1,4 +1,4 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.percolate
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.percolate
 
 import play.api.libs.json.JsObject
 

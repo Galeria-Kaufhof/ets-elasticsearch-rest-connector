@@ -1,6 +1,6 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.mapping
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.mapping
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.mapping.EnumMappingTypes.EnumMappingType
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.mapping.EnumMappingTypes.EnumMappingType
 import play.api.libs.json.{JsString, JsValue}
 
 object EnumMappingTypes extends Enumeration{

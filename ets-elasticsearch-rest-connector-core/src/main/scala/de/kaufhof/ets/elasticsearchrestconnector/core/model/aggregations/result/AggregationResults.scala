@@ -1,4 +1,4 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.aggregations.result
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.aggregations.result
 
 import de.galeria.pim.core.persistence.repositories.elasticsearch.AggregationResultElement
 import play.api.libs.json._

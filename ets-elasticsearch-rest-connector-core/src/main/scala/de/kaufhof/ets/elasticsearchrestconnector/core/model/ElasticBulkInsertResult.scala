@@ -1,6 +1,6 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.model
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.indexing.BulkInsertResultItem
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.indexing.BulkInsertResultItem
 import play.api.libs.json.JsObject
 
 case class ElasticBulkInsertResult(

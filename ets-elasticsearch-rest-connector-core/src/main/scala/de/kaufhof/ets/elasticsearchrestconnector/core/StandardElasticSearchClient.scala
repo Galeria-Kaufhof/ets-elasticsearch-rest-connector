@@ -1,11 +1,11 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client
+package de.kaufhof.ets.elasticsearchrestconnector.core
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model._
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.hits.ElasticSearchHits
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.indexing.{BulkInsertResultItem, IndexedDocument}
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.mapping.MappingObject
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.percolate.PercolateDocument
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.services.{JsonToMappingResultConverter, JsonToSearchResultConverter}
+import de.kaufhof.ets.elasticsearchrestconnector.core.model._
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.hits.ElasticSearchHits
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.indexing.{BulkInsertResultItem, IndexedDocument}
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.mapping.MappingObject
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.percolate.PercolateDocument
+import de.kaufhof.ets.elasticsearchrestconnector.core.services.{JsonToMappingResultConverter, JsonToSearchResultConverter}
 import org.elasticsearch.client.RestClient
 import play.api.libs.json._
 

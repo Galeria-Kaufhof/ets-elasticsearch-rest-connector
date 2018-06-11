@@ -1,6 +1,6 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.model
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.mapping.MappingValue
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.mapping.MappingValue
 
 case class ElasticMappingReceiveResult(
                                override val hasError: Boolean = false,

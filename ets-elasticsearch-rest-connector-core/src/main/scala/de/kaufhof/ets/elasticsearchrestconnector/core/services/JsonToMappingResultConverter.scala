@@ -1,7 +1,7 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.services
+package de.kaufhof.ets.elasticsearchrestconnector.core.services
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.ElasticMappingReceiveResult
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.mapping.MappingValue
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.ElasticMappingReceiveResult
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.mapping.MappingValue
 import play.api.libs.json.{JsObject, JsValue}
 
 object JsonToMappingResultConverter {

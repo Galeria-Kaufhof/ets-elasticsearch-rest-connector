@@ -1,7 +1,7 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.model
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.aggregations.result.AggregationResults
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.hits.ElasticSearchHits
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.aggregations.result.AggregationResults
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.hits.ElasticSearchHits
 
 case class ElasticSearchResult(
                                 took: Long,

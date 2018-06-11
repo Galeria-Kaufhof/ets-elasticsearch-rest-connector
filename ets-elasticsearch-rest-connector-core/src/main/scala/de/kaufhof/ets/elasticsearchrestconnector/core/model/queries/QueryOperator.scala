@@ -1,4 +1,4 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queries
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.queries
 
 object QueryOperator extends Enumeration {
   type QueryOperator = Value

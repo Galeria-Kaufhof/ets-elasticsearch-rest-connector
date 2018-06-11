@@ -1,6 +1,6 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queries
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.queries
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queries.QueryOperator.QueryOperator
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.queries.QueryOperator.QueryOperator
 
 case class MultiMatchQuery(
                             fields: List[String],

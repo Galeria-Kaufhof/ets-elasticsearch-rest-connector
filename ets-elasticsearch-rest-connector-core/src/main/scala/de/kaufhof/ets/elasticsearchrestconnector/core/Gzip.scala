@@ -1,4 +1,4 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client
+package de.kaufhof.ets.elasticsearchrestconnector.core
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, InputStream}
 import java.util.zip.{GZIPInputStream, GZIPOutputStream}

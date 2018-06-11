@@ -1,3 +1,3 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queries
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.queries
 
 case class MatchAllQuery(boost: Int = 1) extends QueryExpression

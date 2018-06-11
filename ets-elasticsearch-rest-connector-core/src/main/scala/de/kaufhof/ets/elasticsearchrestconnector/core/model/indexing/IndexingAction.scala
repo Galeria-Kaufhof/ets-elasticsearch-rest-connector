@@ -1,4 +1,4 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.indexing
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.indexing
 
 object IndexingAction extends Enumeration {
   type IndexingAction = Value

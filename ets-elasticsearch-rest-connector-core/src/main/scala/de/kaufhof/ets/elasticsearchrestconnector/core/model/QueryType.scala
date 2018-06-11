@@ -1,7 +1,7 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.model
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.filters.MatchAllFilter
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queryTypes.BooleanQuery
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.filters.MatchAllFilter
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.queryTypes.BooleanQuery
 import play.api.libs.json._
 
 trait QueryType {

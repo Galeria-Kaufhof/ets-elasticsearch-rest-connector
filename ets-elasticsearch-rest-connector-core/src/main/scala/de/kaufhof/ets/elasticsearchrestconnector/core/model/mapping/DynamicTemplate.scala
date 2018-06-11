@@ -1,4 +1,4 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.mapping
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.mapping
 
 import play.api.libs.json._
 

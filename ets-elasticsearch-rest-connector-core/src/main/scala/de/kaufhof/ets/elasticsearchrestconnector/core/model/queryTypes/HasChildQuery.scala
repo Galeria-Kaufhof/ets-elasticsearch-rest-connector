@@ -1,7 +1,7 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queryTypes
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.queryTypes
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.QueryType
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queryTypes.ScoreMode.ScoreMode
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.QueryType
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.queryTypes.ScoreMode.ScoreMode
 
 case class HasChildQuery(
                           childType: String,

@@ -1,7 +1,7 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.model
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.SortMode.SortMode
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.SortOrder.SortOrder
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.SortMode.SortMode
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.SortOrder.SortOrder
 import play.api.libs.json.{JsValue, Json, OFormat, Writes}
 
 case class Sort(fieldName: String, order: SortOrder = SortOrder.Ascending, sortMode: SortMode = SortMode.Avg)

@@ -1,5 +1,5 @@
-package de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.filters
+package de.kaufhof.ets.elasticsearchrestconnector.core.model.filters
 
-import de.galeria.pim.core.persistence.repositories.elasticsearch.client.model.queries.QueryExpression
+import de.kaufhof.ets.elasticsearchrestconnector.core.model.queries.QueryExpression
 
 case class QueryFilter(query: QueryExpression) extends FilterExpression
