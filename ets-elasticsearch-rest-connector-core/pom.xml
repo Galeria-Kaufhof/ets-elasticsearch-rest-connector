@@ -42,5 +42,10 @@
             <groupId>com.typesafe.scala-logging</groupId>
             <artifactId>scala-logging_${ets.scala.compat.version}</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.typesafe.scala-logging</groupId>
+            <artifactId>scala-logging_${ets.scala.compat.version}</artifactId>
+        </dependency>
     </dependencies>
 </project>

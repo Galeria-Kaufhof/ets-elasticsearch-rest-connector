@@ -2,7 +2,7 @@ package de.galeria.pim.core.persistence.repositories.elasticsearch.client
 
 import java.io.InputStream
 
-import de.galeria.pim.core.infrastructure.logging.{Search, TracedLogging}
+import com.typesafe.scalalogging.LazyLogging
 import org.apache.http.entity.{ByteArrayEntity, ContentType, StringEntity}
 import org.apache.http.message.BasicHeader
 import org.apache.http.{Header, HttpEntity, HttpHeaders}
@@ -17,7 +17,7 @@ object RichRestClient {
 
 }
 
-class RichClient(restClient: RestClient) extends TracedLogging {
+class RichClient(restClient: RestClient) extends LazyLogging {
 
   private final val compressionMode: String = "gzip"
 
@@ -31,11 +31,11 @@ class RichClient(restClient: RestClient) extends TracedLogging {
           case responseException: ResponseException if responseException.getResponse.getStatusLine.getStatusCode == 404 =>
             // TODO Parse exception message? 404 is not always REST resource not found, Akka HTTP returns 404 when param is missing?
             //logger.debug("Treating 404 as success w/o result " + responseException.getMessage)
-            log.error(Search, s"treating a http-404 as success without result ${responseException.getMessage}", responseException)
+            logger.error(s"treating a http-404 as success without result ${responseException.getMessage}", responseException)
             p.success(JsNull)
             ()
           case _ =>
-            log.error(Search, s"error while executing a GET to search", exception)
+            logger.error(s"error while executing a GET to search", exception)
             p.failure(exception)
             ()
         }
@@ -74,11 +74,11 @@ class RichClient(restClient: RestClient) extends TracedLogging {
           case responseException: ResponseException if responseException.getResponse.getStatusLine.getStatusCode == 404 =>
             // TODO Parse exception message? 404 is not always REST resource not found, Akka HTTP returns 404 when param is missing?
             //logger.debug("Treating 404 as success w/o result " + responseException.getMessage)
-            log.error(Search, s"treating a http-404 as success without result ${responseException.getMessage}", responseException)
+            logger.error(s"treating a http-404 as success without result ${responseException.getMessage}", responseException)
             p.success(JsNull)
             ()
           case _ =>
-            log.error(Search, s"error while executing a GET to search", exception)
+            logger.error(s"error while executing a GET to search", exception)
             p.failure(exception)
             ()
         }
@@ -119,11 +119,11 @@ class RichClient(restClient: RestClient) extends TracedLogging {
           case responseException: ResponseException if responseException.getResponse.getStatusLine.getStatusCode == 404 =>
             // TODO Parse exception message? 404 is not always REST resource not found, Akka HTTP returns 404 when param is missing?
             //logger.debug("Treating 404 as success w/o result " + responseException.getMessage)
-            log.error(Search, s"treating a http-404 as success without result ${responseException.getMessage}", responseException)
+            logger.error(s"treating a http-404 as success without result ${responseException.getMessage}", responseException)
             p.success(JsNull)
             ()
           case _ =>
-            log.error(Search, s"error while executing a GET to search", exception)
+            logger.error(s"error while executing a GET to search", exception)
             p.failure(exception)
             ()
         }
@@ -176,7 +176,7 @@ class RichClient(restClient: RestClient) extends TracedLogging {
           ()
         }
         override def onFailure(exception: Exception): Unit = {
-          log.error(Search, s"error while executing a PUT to search", exception)
+          logger.error(s"error while executing a PUT to search", exception)
           p.failure(exception)
           ()
         }
@@ -213,8 +213,8 @@ class RichClient(restClient: RestClient) extends TracedLogging {
         }
 
         override def onFailure(exception: Exception): Unit = {
-          log.error(Search, s"error while executing a POST to search", exception)
-          log.error(Search, s"REQUEST: $body")
+          logger.error(s"error while executing a POST to search", exception)
+          logger.error(s"REQUEST: $body")
           p.failure(exception)
           ()
         }
@@ -250,7 +250,7 @@ class RichClient(restClient: RestClient) extends TracedLogging {
         }
 
         override def onFailure(exception: Exception): Unit = {
-          log.error(Search, s"error while executing a PUT (bulk-Operation) to index", exception)
+          logger.error(s"error while executing a PUT (bulk-Operation) to index", exception)
           p.failure(exception)
           ()
         }
@@ -277,7 +277,7 @@ class RichClient(restClient: RestClient) extends TracedLogging {
         }
 
         override def onFailure(exception: Exception): Unit = {
-          log.error(Search, s"error while executing a DELETE to index", exception)
+          logger.error(s"error while executing a DELETE to index", exception)
           p.failure(exception)
           ()
         }
