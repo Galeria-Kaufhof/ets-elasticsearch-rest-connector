@@ -1,3 +1,0 @@
-package de.kaufhof.ets.elasticsearchrestconnector.core.model.mapping
-
-case object PercolatorMappingProperty extends MappingProperty
