@@ -43,5 +43,10 @@
             <artifactId>scala-logging_${ets.scala.compat.version}</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-stream_${ets.scala.compat.version}</artifactId>
+        </dependency>
+
     </dependencies>
 </project>
