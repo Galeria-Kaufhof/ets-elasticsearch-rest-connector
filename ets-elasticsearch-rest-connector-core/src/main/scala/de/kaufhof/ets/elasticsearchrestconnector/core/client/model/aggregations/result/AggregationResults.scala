@@ -1,6 +1,5 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.aggregations.result
 
-import AggregationResultElement
 import play.api.libs.json._
 
 case class AggregationResults(aggregationList: List[AggregationResult])
