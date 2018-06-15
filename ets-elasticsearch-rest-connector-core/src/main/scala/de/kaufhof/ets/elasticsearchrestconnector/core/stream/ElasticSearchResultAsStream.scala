@@ -52,12 +52,6 @@ trait ElasticSearchResultAsStream[Params, InternalSearchResult, Result] extends 
       .via(toSingleElement)
   }
 
-  private def cutMaxValue(maxValue: Option[Long]): Flow[Result, Result, NotUsed] = {
-    maxValue.map { value =>
-      Flow[Result].take(value)
-    }.getOrElse(Flow[Result])
-  }
-
   private val extractItems: Flow[Page, Seq[Result], NotUsed] = {
     Flow[Page].map(_.content)
   }
