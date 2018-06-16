@@ -35,14 +35,13 @@ class RichClient(restClient: RestClient) extends LazyLogging {
             p.success(JsNull)
             ()
           case _ =>
-            logger.error(s"error while executing a GET to search", exception)
+            logger.error(s"error while executing a HEAD to search", exception)
             p.failure(exception)
             ()
         }
 
         override def onSuccess(response: Response): Unit = {
-          val result: _root_.play.api.libs.json.JsObject = JsObject(Map("exists" -> JsBoolean(response.getStatusLine.getStatusCode == 200)))
-          p.success(result)
+          p.success(Json.obj("statuscode" -> JsNumber(response.getStatusLine.getStatusCode)))
           ()
         }
       }

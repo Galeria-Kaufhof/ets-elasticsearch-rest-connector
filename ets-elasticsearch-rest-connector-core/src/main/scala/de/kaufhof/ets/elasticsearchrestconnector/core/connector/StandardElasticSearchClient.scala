@@ -131,7 +131,7 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     val endpoint: String = s"${urlEncodePathEntity(indexName)}"
     restClient.headRequest(endpoint).map { jsResult =>
       ElasticIndexExistsResult(
-        exists = (jsResult \ "exists").asOpt[Boolean].getOrElse(false)
+        exists = (jsResult \ "statuscode").asOpt[Int].contains(200)
       )
     }.recover {
       case ex: Throwable =>
