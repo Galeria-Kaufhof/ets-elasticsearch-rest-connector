@@ -1,5 +1,8 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.connector
 
-case class ElasticSearchConfiguration(uri: String,
+import org.apache.http.HttpHost
+
+case class ElasticSearchConfiguration(hostList: List[HttpHost],
                                       indexName: String,
-                                      clusterName: Option[String])
+                                      clusterName: Option[String]
+                                     )
