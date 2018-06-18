@@ -46,4 +46,7 @@ From here you can use the elasticClient for all your operations (index, search, 
 All examples uses the elasticClient-Object from this page as base to work with.
 Let's take a look to the different parts of this driver:
 
-[Indexing](documentation/indexing.md)
+
+## Full documentation
+
+See the [ElasticSearch REST Connector chapter](https://galeria-kaufhof.github.io/ets-documentation/ElasticSearch-REST-Connector/) on the ETS documentation portal.
