@@ -9,6 +9,19 @@
         <relativePath />
     </parent>
 
+    <!-- For galeria kaufhof internal purposes only, this profile will be removed in future!
+    This will not work for releases! The idea is to call mvn -P scala-2.11 package and copy the pure target/<lib>.jar
+    to the project using deprecated scala 2.11-->
+    <profiles>
+        <profile>
+            <id>scala-2.11</id>
+            <properties>
+                <ets.scala.version>2.11.12</ets.scala.version>
+                <ets.scala.compat.version>2.11</ets.scala.compat.version>
+            </properties>
+        </profile>
+    </profiles>
+
     <artifactId>ets-elasticsearch-rest-connector-core</artifactId>
     <version>0.1.0-SNAPSHOT</version>
 
