@@ -42,3 +42,8 @@ Now, you can define a new ElasticSearchClient with the prior builded restclient.
     val elasticClient: StandardElasticSearchClient = new StandardElasticSearchClient(elasticRestClient)
     
 From here you can use the elasticClient for all your operations (index, search, percolate ...)
+
+All examples uses the elasticClient-Object from this page as base to work with.
+Let's take a look to the different parts of this driver:
+
+[Indexing](documentation/indexing.md)

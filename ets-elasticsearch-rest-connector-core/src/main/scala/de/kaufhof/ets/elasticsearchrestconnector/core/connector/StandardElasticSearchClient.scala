@@ -32,8 +32,7 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
           hits = ElasticSearchHits(Seq.empty),
           total = 0,
           aggregations = None,
-          hasError = true,
-          errorMessage = ex.getMessage + "\n\n" + query
+          throwable = Some(ex)
         )
     }
   }
@@ -43,8 +42,7 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     restClient.getJson(endpoint, compressCommunication).map(JsonToMappingResultConverter(_)).recover {
       case ex: Throwable =>
         ElasticMappingReceiveResult(
-          hasError = true,
-          errorMessage = ex.getMessage
+          throwable = Some(ex)
         )
     }
 
@@ -52,22 +50,21 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
 
   private def urlEncodePathEntity(indexName: String): String = java.net.URLEncoder.encode(indexName, "utf-8")
 
-  def createIndex(indexName: String, mappingObject: MappingObject): Future[ElasticMappingCreateResult] = {
+  def createIndex(indexName: String, mappingObject: MappingObject): Future[ElasticIndexCreateResult] = {
     createIndex(indexName, mappingObject.asJsObject)
   }
 
-  def createIndex(indexName: String, mappingAsJson: JsValue): Future[ElasticMappingCreateResult] = {
+  def createIndex(indexName: String, mappingAsJson: JsValue): Future[ElasticIndexCreateResult] = {
     val endpoint: String = s"${urlEncodePathEntity(indexName)}"
     restClient.putJson(endpoint, mappingAsJson, compressCommunication).map { jsResult =>
-      ElasticMappingCreateResult(
+      ElasticIndexCreateResult(
+        throwable = None,
         created = (jsResult \ "acknowledged").asOpt[Boolean].getOrElse(false)
       )
     } recover {
       case ex: Throwable =>
-        println(s"error adding $ex")
-        ElasticMappingCreateResult(
-          hasError = true,
-          errorMessage = ex.getMessage,
+        ElasticIndexCreateResult(
+          throwable = Some(ex),
           created = false
         )
     }
@@ -76,17 +73,15 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
   def refreshIndex(indexName: String): Future[ElasticIndexRefreshResult] = {
     val endpoint: String = s"${urlEncodePathEntity(indexName)}/_refresh"
     restClient.postJson(endpoint, emptyBody, compressCommunication).map { jsResult =>
-      val u = jsResult \\ "successful"
-      val v = jsResult \\ "total"
       val f: Option[Int] = (jsResult \\ "failed").headOption.flatMap(_.asOpt[Int])
       ElasticIndexRefreshResult(
+        throwable = None,
         refreshed = f.contains(0)
       )
     }.recover {
       case ex: Throwable =>
         ElasticIndexRefreshResult(
-          hasError = true,
-          errorMessage = ex.getMessage,
+          throwable = Some(ex),
           refreshed = false
         )
     }
@@ -95,17 +90,15 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
   def flushIndex(indexName: String): Future[ElasticIndexFlushResult] = {
     val endpoint: String = s"${urlEncodePathEntity(indexName)}/_flush"
     restClient.postJson(endpoint, emptyBody, compressCommunication).map { jsResult =>
-      val u = jsResult \\ "successful"
-      val v = jsResult \\ "total"
       val f = (jsResult \\ "failed").headOption.flatMap(_.asOpt[Int])
       ElasticIndexFlushResult(
+        throwable = None,
         flushed = f.contains(0)
       )
     }.recover {
       case ex: Throwable =>
         ElasticIndexFlushResult(
-          hasError = true,
-          errorMessage = ex.getMessage,
+          throwable = Some(ex),
           flushed = false
         )
     }
@@ -115,14 +108,14 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     val endpoint: String = s"${urlEncodePathEntity(indexName)}"
     restClient.delete(endpoint, compressCommunication).map { jsResult =>
       ElasticIndexDeleteResult(
+        throwable = None,
         deleted = (jsResult \ "acknowledged").asOpt[Boolean].getOrElse(false)
       )
     }.recover {
       case ex: Throwable =>
         ElasticIndexDeleteResult(
-          hasError = true,
           deleted = false,
-          errorMessage = ex.getMessage
+          throwable = Some(ex)
         )
     }
   }
@@ -131,13 +124,13 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     val endpoint: String = s"${urlEncodePathEntity(indexName)}"
     restClient.headRequest(endpoint).map { jsResult =>
       ElasticIndexExistsResult(
+        throwable = None,
         exists = (jsResult \ "statuscode").asOpt[Int].contains(200)
       )
     }.recover {
       case ex: Throwable =>
         ElasticIndexExistsResult(
-          hasError = true,
-          errorMessage = ex.getMessage,
+          throwable = Some(ex),
           exists = false
         )
     }
@@ -153,8 +146,7 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     }.recover {
       case ex: Throwable =>
         ElasticBulkInsertResult(
-          hasError = true,
-          errorMessage = ex.getMessage,
+          throwable = Some(ex),
           took = 0,
           errors = true,
           items = List.empty[BulkInsertResultItem]
@@ -166,13 +158,13 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     val endpoint: String = s"${urlEncodePathEntity(indexName)}/$documentType/$id"
     restClient.delete(endpoint, compressCommunication).map { jsResult =>
       ElasticDeleteDocumentResult(
+        throwable = None,
         found = (jsResult \ "found").asOpt[Boolean].getOrElse(false)
       )
     }.recover {
       case ex: Throwable =>
         ElasticDeleteDocumentResult(
-          hasError = true,
-          errorMessage = ex.getMessage,
+          throwable = Some(ex),
           found = false
         )
     }
@@ -186,13 +178,13 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
       ElasticPercolateRegisterResult(
         created = (jsValue \ "result").asOpt[String].exists("created" == ),
         version = (jsValue \ "_version").asOpt[Int].getOrElse(0),
-        id = (jsValue \ "_id").asOpt[String].getOrElse("")
+        id = (jsValue \ "_id").asOpt[String].getOrElse(""),
+        throwable = None
       )
     } recover {
       case ex: Throwable =>
         ElasticPercolateRegisterResult(
-          hasError = true,
-          errorMessage = ex.getMessage,
+          throwable = Some(ex),
           created = false,
           version = 0,
           id = ""
@@ -205,13 +197,13 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     val endpoint: String = s"${urlEncodePathEntity(indexName)}/$typeName/${urlEncodePathEntity(id)}"
     restClient.delete(endpoint, compressCommunication).map { jsResult =>
       ElasticPercolateUnregisterResult(
+        throwable = None,
         found = (jsResult \ "result").asOpt[String].contains("deleted")
       )
     } recover {
       case ex: Throwable =>
         ElasticPercolateUnregisterResult(
-          hasError = true,
-          errorMessage = ex.getMessage,
+          throwable = Some(ex),
           found = false
         )
     }
@@ -222,14 +214,14 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
 
     restClient.getJson(endpoint, document, compressCommunication).map { jsResult =>
       ElasticPercolateResult(
+        throwable = None,
         matches = extractPercolateResult(jsResult),
         total = (jsResult \ "hits" \ "total").asOpt[Int].getOrElse(0)
       )
     }.recover {
       case ex: Throwable =>
         ElasticPercolateResult(
-          hasError = true,
-          errorMessage = ex.getMessage,
+          throwable = Some(ex),
           matches = List.empty[ElasticPercolateResultMatch],
           total = 0
         )

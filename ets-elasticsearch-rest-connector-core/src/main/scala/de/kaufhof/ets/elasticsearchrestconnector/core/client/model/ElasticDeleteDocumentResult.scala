@@ -1,7 +1,6 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.client.model
 
 case class ElasticDeleteDocumentResult(
-                                        override val hasError: Boolean = false,
-                                        override val errorMessage: String = "",
+                                        override val throwable: Option[Throwable],
                                         found: Boolean
                                         ) extends ElasticResult

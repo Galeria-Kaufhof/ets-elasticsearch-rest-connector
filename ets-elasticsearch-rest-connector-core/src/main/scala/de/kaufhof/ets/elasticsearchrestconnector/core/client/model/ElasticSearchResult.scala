@@ -8,6 +8,5 @@ case class ElasticSearchResult(
                                 hits: ElasticSearchHits,
                                 total: Long,
                                 aggregations: Option[AggregationResults],
-                                override val hasError: Boolean = false,
-                                override val errorMessage: String = ""
+                                override val throwable: Option[Throwable]
                               ) extends ElasticResult

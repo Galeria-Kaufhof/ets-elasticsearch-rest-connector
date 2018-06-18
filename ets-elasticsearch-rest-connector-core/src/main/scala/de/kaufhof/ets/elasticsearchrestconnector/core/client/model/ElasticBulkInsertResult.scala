@@ -4,8 +4,7 @@ import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.Bulk
 import play.api.libs.json.JsObject
 
 case class ElasticBulkInsertResult(
-                                    override val hasError: Boolean = false,
-                                    override val errorMessage: String = "",
+                                    override val throwable: Option[Throwable],
                                     took: Long,
                                     errors: Boolean,
                                     items: List[BulkInsertResultItem]
@@ -16,6 +15,7 @@ object ElasticBulkInsertResult {
 
   def apply(o: JsObject): ElasticBulkInsertResult = {
     ElasticBulkInsertResult(
+      throwable = None,
       took = (o \ "took").as[Long],
       errors = (o \ "errors").as[Boolean],
       items = (o \ "items").as[List[JsObject]].map(jso => BulkInsertResultItem(jso))

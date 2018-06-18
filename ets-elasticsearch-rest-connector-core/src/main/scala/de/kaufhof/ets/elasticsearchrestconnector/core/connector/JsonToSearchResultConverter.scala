@@ -23,7 +23,8 @@ object JsonToSearchResultConverter {
       took = took,
       total = total,
       aggregations = maybeAggregations.asOpt,
-      hits = hitResults
+      hits = hitResults,
+      throwable = None
     )
 
   }

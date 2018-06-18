@@ -1,8 +1,7 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.client.model
 
 case class ElasticPercolateRegisterResult(
-                                           override val hasError: Boolean = false,
-                                           override val errorMessage: String = "",
+                                           override val throwable: Option[Throwable],
                                            created: Boolean,
                                            version: Int,
                                            id: String
