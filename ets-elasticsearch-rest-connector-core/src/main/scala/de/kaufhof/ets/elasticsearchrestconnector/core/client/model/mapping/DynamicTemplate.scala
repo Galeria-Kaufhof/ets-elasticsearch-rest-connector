@@ -4,12 +4,12 @@ import play.api.libs.json._
 
 case class DynamicTemplate(
                             name: String,
-                            index: String,
+                            index: Option[String] = None,
                             dynamicTemplateType: String,
                             fields: List[MappingProperty],
-                            dynamicTemplateMatch: String,
+                            dynamicTemplateMatch: Option[String] = None,
                             matchMappingType: String,
-                            pathMatch: String,
+                            pathMatch: Option[String] = None,
                             fieldData: Option[Boolean] = None,
                             ignoreMalformed: Option[Boolean] = None
                           )
@@ -20,18 +20,18 @@ object DynamicTemplate {
   implicit val writes: Writes[DynamicTemplate] = new Writes[DynamicTemplate] {
     override def writes(o: DynamicTemplate): JsValue = {
       Json.obj(
-        o.name -> Json.obj(
-          "mapping" -> JsObject(Seq(
-            Some("index" -> JsString(o.index)),
+        o.name -> JsObject(Seq(
+          Some("mapping" -> JsObject(Seq(
+            o.index.map(s => "index" -> JsString(s)),
             Some("type" -> JsString(o.dynamicTemplateType)),
             o.ignoreMalformed.map(b => "ignore_malformed" -> JsBoolean(b)),
             o.fieldData.map(b => "fielddata" -> JsBoolean(b)),
             Some("fields" -> JsObject(o.fields.map(MappingProperty(_))))
-          ).flatten),
-          "match" -> o.dynamicTemplateMatch,
-          "match_mapping_type" -> o.matchMappingType,
-          "path_match" -> o.pathMatch
-        )
+          ).flatten)),
+          o.dynamicTemplateMatch.map(b => "match" -> JsString(b)),
+          Some("match_mapping_type" -> JsString(o.matchMappingType)),
+          o.pathMatch.map(b => "path_match" -> JsString(b))
+        ).flatten)
       )
     }
   }
