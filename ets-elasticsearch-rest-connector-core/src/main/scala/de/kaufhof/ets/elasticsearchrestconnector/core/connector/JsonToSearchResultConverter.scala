@@ -16,13 +16,13 @@ object JsonToSearchResultConverter {
     val results: Seq[JsValue] = (json \ _hits \ _hits).as[Seq[JsValue]]
     val hitResults: ElasticSearchHits = renderSearchHits(results)
 
-    val maybeAggregations: JsResult[AggregationResults] = Json.fromJson[AggregationResults](json)
+    val maybeAggregations: Option[AggregationResults] = Json.fromJson[AggregationResults](json).asOpt
     val took: Long = (json \ _took).as[Long]
     val total: Long = (json \ _hits \ _total).as[Long]
     ElasticSearchResult(
       took = took,
       total = total,
-      aggregations = maybeAggregations.asOpt,
+      aggregations = maybeAggregations,
       hits = hitResults,
       throwable = None
     )

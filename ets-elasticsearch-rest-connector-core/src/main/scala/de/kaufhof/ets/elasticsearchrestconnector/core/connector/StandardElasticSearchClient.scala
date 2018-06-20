@@ -230,12 +230,12 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
 
   private def extractPercolateResult(jsResult: JsValue): List[ElasticPercolateResultMatch] = {
     (jsResult \ "hits" \ "hits").asOpt[JsArray].map { values =>
-      values.value.map { inner =>
+      values.as[List[JsValue]].map { inner =>
         ElasticPercolateResultMatch(
           score = (inner \ "_score").asOpt[Float].getOrElse(0),
           percolateMatch = (inner \ "_id").asOpt[String].getOrElse("")
         )
-      }.toList
+      }
     }.getOrElse(List.empty[ElasticPercolateResultMatch])
   }
 

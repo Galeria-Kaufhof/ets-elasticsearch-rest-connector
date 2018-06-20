@@ -7,14 +7,10 @@ case class AggregationResults(aggregationList: List[AggregationResult])
 object AggregationResults {
   implicit val reads: Reads[AggregationResults] = new Reads[AggregationResults] {
     override def reads(json: JsValue): JsResult[AggregationResults] = {
-      (json \ "aggregations").toEither match {
-        case Right(jsValue: JsValue) =>
-          val aggs = jsValue.as[JsObject].value
-          val result = aggs.map(renderAggregationResult)
-          JsSuccess(AggregationResults(aggregationList = result.toList))
-        case Left(error) =>
-          JsError(error)
-      }
+      (json \ "aggregations").asOpt[JsObject].map{aggs =>
+        val result = aggs.value.map(renderAggregationResult)
+        JsSuccess(AggregationResults(aggregationList = result.toList))
+      }.getOrElse(JsError("no aggregation found in result"))
     }
   }
 
@@ -44,11 +40,11 @@ object AggregationResults {
   }
 
   def renderAggregateBucketResultFromArray(jsa: JsArray): List[AggregateBucketResult] = {
-    jsa.value.map(buildAggregateBucketResult).toList
+    jsa.as[List[JsValue]].map(buildAggregateBucketResult)
   }
 
   def renderAggregateBucketResult(jso: JsObject): List[AggregateBucketResult] = {
-    (jso \ "buckets").as[JsArray].value.map(buildAggregateBucketResult).toList
+    (jso \ "buckets").as[List[JsValue]].map(buildAggregateBucketResult)
   }
 
 
