@@ -1,5 +1,7 @@
 # ets-elasticsearch-rest-connector
 
+[![Build Status](https://travis-ci.com/Galeria-Kaufhof/ets-elasticsearch-rest-connector.svg?branch=master)](https://travis-ci.com/Galeria-Kaufhof/ets-elasticsearch-rest-connector)
+
 ## description
 The connector uses the RESTful api of an elastic-server to .
 Currently it supports the elastic-version 6.2.2
