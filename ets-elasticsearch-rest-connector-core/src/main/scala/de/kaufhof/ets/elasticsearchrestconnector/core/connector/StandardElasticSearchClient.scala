@@ -2,7 +2,7 @@ package de.kaufhof.ets.elasticsearchrestconnector.core.connector
 
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model._
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.hits.ElasticSearchHits
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.{BulkInsertResultItem, BulkOperationResult, IndexedDocument}
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.{BulkOperationResult, IndexedDocument}
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.MappingObject
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.percolate.PercolateDocument
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.services.JsonToMappingResultConverter
