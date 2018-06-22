@@ -52,11 +52,11 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
 
   private def urlEncodePathEntity(indexName: String): String = java.net.URLEncoder.encode(indexName, "utf-8")
 
-  def createIndex(indexName: String, mappingObject: MappingObject): Future[ElasticIndexCreateResult] = {
-    createIndex(indexName, mappingObject.asJsObject)
+  def createIndex(mappingObject: MappingObject): Future[ElasticIndexCreateResult] = {
+    createIndex(mappingObject.indexName, mappingObject.asJsObject)
   }
 
-  def createIndex(indexName: String, mappingAsJson: JsValue): Future[ElasticIndexCreateResult] = {
+  def createIndex(indexName: String, mappingAsJson: JsObject): Future[ElasticIndexCreateResult] = {
     val endpoint: String = s"${urlEncodePathEntity(indexName)}"
     restClient.putJson(endpoint, mappingAsJson, compressCommunication).map { jsResult =>
       ElasticIndexCreateResult(
