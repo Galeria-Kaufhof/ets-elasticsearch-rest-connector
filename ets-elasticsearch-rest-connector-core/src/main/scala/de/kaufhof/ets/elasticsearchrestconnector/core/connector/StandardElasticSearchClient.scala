@@ -136,6 +136,22 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     }
   }
 
+  def insertDocument(indexName: String, documentType: String, id: String, document: JsObject): Future[ElasticInsertDocumentResult] = {
+    val endpoint: String = s"${urlEncodePathEntity(indexName)}/$documentType/$id"
+    val content: String = Json.stringify(document) + "\n"
+    restClient.putJson(endpoint, content, compressed = compressCommunication).map{jsResult =>
+      ElasticInsertDocumentResult(jsResult)
+    }.recover{
+      case ex: Throwable =>
+        ElasticInsertDocumentResult(
+          throwable = Some(ex),
+          _index = indexName,
+          _type = documentType,
+          _id = id
+        )
+    }
+  }
+
   def bulkInsertDocuments(documents: List[IndexedDocument]): Future[ElasticBulkInsertResult] = {
     val endpoint: String = s"/_bulk"
     val bodyContent: String = documents.map { indexedDocument =>
