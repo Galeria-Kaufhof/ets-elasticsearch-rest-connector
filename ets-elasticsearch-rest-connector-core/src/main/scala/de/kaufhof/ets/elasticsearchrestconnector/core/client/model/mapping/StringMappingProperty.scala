@@ -4,7 +4,7 @@ import play.api.libs.json.{JsObject, JsString, JsValue}
 
 case class StringMappingProperty(name: String, optionalFields: Option[Seq[MappingProperty]] = None,
                                  optionalAnalyzer: Option[String] = None,
-                                 optionalIndex: Option[String] = None,
+                                 optionalIndex: Option[Boolean] = None,
                                  optionalFieldData: Option[Boolean] = None
                                 ) extends MappingProperty
 

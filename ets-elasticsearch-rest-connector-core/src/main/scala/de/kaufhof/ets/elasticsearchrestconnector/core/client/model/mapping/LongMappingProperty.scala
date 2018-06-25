@@ -5,7 +5,7 @@ import play.api.libs.json.{JsObject, JsString, JsValue}
 case class LongMappingProperty(
                                 name: String, nullValue: Option[Long] = None,
                                 optionalFields: Option[Seq[MappingProperty]] = None,
-                                optionalIndex: Option[String] = None
+                                optionalIndex: Option[Boolean] = None
                               ) extends MappingProperty
 
 object LongMappingProperty{
