@@ -23,9 +23,9 @@ object MappingPropertyImplicits {
     }
   }
 
-  implicit def renderOptionalIndex(maybeIndex: Option[String]): Option[(String, JsValue)] = {
+  implicit def renderOptionalIndex(maybeIndex: Option[Boolean]): Option[(String, JsValue)] = {
     maybeIndex.map { index =>
-      "index" -> JsBoolean(Try(index.toBoolean).getOrElse(false))
+      "index" -> JsBoolean(index)
     }
   }
 

@@ -2,7 +2,7 @@ package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping
 
 import play.api.libs.json.{JsObject, JsString, JsValue}
 
-case class BooleanMappingProperty(name: String, optionalFields: Option[Seq[MappingProperty]] = None, optionalAnalyzer: Option[String] = None,optionalIndex: Option[String] = None) extends MappingProperty
+case class BooleanMappingProperty(name: String, optionalFields: Option[Seq[MappingProperty]] = None, optionalAnalyzer: Option[String] = None,optionalIndex: Option[Boolean] = None) extends MappingProperty
 
 
 object BooleanMappingProperty{
@@ -12,6 +12,7 @@ object BooleanMappingProperty{
       Map("type" -> JsString("boolean"))
         ++ renderOptionalFields(o.optionalFields)
         ++ renderOptionalIndex(o.optionalIndex)
+        ++ renderOptionalAnalyzer(o.optionalAnalyzer)
     )
   }
 }
