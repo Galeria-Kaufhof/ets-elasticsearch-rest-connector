@@ -61,5 +61,12 @@
             <artifactId>akka-stream_${ets.scala.compat.version}</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>pl.allegro.tech</groupId>
+            <artifactId>embedded-elasticsearch</artifactId>
+            <version>2.5.1</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 </project>

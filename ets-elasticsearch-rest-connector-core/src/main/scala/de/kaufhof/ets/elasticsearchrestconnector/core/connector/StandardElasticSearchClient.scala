@@ -5,6 +5,8 @@ import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.hits.ElasticS
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.{BulkOperationResult, IndexedDocument}
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.MappingObject
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.percolate.PercolateDocument
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.DeleteDocumentByQueryWrapper
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queryTypes.Query
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.services.JsonToMappingResultConverter
 import org.elasticsearch.client.RestClient
 import play.api.libs.json._
@@ -50,11 +52,11 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
 
   private def urlEncodePathEntity(indexName: String): String = java.net.URLEncoder.encode(indexName, "utf-8")
 
-  def createIndex(indexName: String, mappingObject: MappingObject): Future[ElasticIndexCreateResult] = {
-    createIndex(indexName, mappingObject.asJsObject)
+  def createIndex(mappingObject: MappingObject): Future[ElasticIndexCreateResult] = {
+    createIndex(mappingObject.indexName, mappingObject.asJsObject)
   }
 
-  def createIndex(indexName: String, mappingAsJson: JsValue): Future[ElasticIndexCreateResult] = {
+  def createIndex(indexName: String, mappingAsJson: JsObject): Future[ElasticIndexCreateResult] = {
     val endpoint: String = s"${urlEncodePathEntity(indexName)}"
     restClient.putJson(endpoint, mappingAsJson, compressCommunication).map { jsResult =>
       ElasticIndexCreateResult(
@@ -166,6 +168,22 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
           took = 0,
           errors = true,
           items = List.empty[BulkOperationResult]
+        )
+    }
+  }
+
+  def deleteDocumentByQuery(indexName: String, documentType: String, query: Query): Future[ElasticDeleteByQueryResult] = {
+    val endpoint: String = s"${urlEncodePathEntity(indexName)}/$documentType/_delete_by_query"
+    val queryContent: JsValue = DeleteDocumentByQueryWrapper(query)
+    restClient.postJson(endpoint, queryContent, compressed = compressCommunication).map{jsResult =>
+      ElasticDeleteByQueryResult(jsResult,indexName,documentType)
+    }.recover{
+      case ex: Throwable =>
+        ElasticDeleteByQueryResult(
+          throwable = Some(ex),
+          _index = indexName,
+          _type = documentType,
+          total = 0
         )
     }
   }
