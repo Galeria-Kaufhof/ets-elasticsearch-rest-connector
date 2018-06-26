@@ -8,8 +8,8 @@ case class Mapping(
                     dynamic: MappingType,
                     dateDetection: Boolean,
                     numericDetection: Boolean,
-                    parent: Option[String],
-                    routing: Option[Boolean],
+                    parent: Option[String] = None,
+                    routing: Option[Boolean] = None,
                     dynamicTemplates: List[DynamicTemplate],
                     properties: List[MappingProperty]
                   )
