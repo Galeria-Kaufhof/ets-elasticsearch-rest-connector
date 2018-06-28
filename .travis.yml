@@ -1,7 +1,19 @@
-language: java
+sudo: required
+
+services:
+  - docker
+
+language: scala
+
 jdk:
   - oraclejdk8
   - openjdk8
+
+before_install:
+  - docker-compose --version
+  - docker-compose -f .travis/docker-compose.yml up -d
+  - docker ps
+
 branches:
   only:
   - master
