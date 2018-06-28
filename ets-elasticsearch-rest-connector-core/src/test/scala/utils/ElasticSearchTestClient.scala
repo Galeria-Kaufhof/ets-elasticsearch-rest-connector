@@ -1,13 +1,9 @@
 package utils
 
-import java.io.File
-import java.util.concurrent.TimeUnit
-
 import de.kaufhof.ets.elasticsearchrestconnector.core.connector.{ElasticSearchConfiguration, ElasticSearchUriParser, RestClientBuilderImpl, StandardElasticSearchClient}
 import org.apache.http.client.config.RequestConfig
 import org.elasticsearch.client.{RestClient, RestClientBuilder}
 import org.scalatest.{BeforeAndAfterAll, WordSpecLike}
-import pl.allegro.tech.embeddedelasticsearch.{EmbeddedElastic, PopularProperties}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
