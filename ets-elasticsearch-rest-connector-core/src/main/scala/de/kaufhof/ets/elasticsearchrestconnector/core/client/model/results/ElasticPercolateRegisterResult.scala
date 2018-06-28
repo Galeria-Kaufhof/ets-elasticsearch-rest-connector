@@ -1,4 +1,4 @@
-package de.kaufhof.ets.elasticsearchrestconnector.core.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results
 
 case class ElasticPercolateRegisterResult(
                                            override val throwable: Option[Throwable],

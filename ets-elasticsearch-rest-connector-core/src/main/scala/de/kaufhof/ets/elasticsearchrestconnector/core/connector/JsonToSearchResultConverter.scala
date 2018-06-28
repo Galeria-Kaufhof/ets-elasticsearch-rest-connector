@@ -1,8 +1,8 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.connector
 
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.ElasticSearchResult
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.aggregations.result.AggregationResults
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.hits.{ElasticSearchHits, Hit, HitSource}
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results.ElasticSearchResult
 import play.api.libs.json._
 
 object JsonToSearchResultConverter {
