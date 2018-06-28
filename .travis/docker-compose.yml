@@ -1,0 +1,14 @@
+version: '2'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.0
+    command: "elasticsearch -E http.compression=true -E discovery.type=single-node -E bootstrap.memory_lock=true -E cluster.name=clusterA"
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx1024m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9310:9300"
+      - "9210:9200"

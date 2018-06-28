@@ -4,7 +4,6 @@ import de.kaufhof.ets.elasticsearchrestconnector.core.connector.{ElasticSearchCo
 import org.apache.http.client.config.RequestConfig
 import org.elasticsearch.client.{RestClient, RestClientBuilder}
 import org.scalatest.{BeforeAndAfterAll, WordSpecLike}
-import pl.allegro.tech.embeddedelasticsearch.{EmbeddedElastic, PopularProperties}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -14,8 +13,7 @@ trait ElasticSearchTestClient extends WordSpecLike with BeforeAndAfterAll {
     standardElasticSearchClient.closeClient()
   }
 
-
-  protected val elasticPort: Int = 9310
+  protected val elasticPort: Int = 9210
   protected val elasticAddress: String = "localhost"
   protected val clusterName: String = "clusterA"
   protected val indexName: String = "index1"
@@ -44,13 +42,4 @@ trait ElasticSearchTestClient extends WordSpecLike with BeforeAndAfterAll {
   val standardElasticSearchClient: StandardElasticSearchClient = new StandardElasticSearchClient(elasticRestClient){
     override val compressCommunication: Boolean = compressCommunicationB
   }
-
-  val embeddedElastic: EmbeddedElastic = EmbeddedElastic.builder()
-    .withElasticVersion("6.2.2")
-    .withSetting(PopularProperties.HTTP_PORT, elasticPort)
-    .withEsJavaOpts("-Xms128m -Xmx512m")
-    .withSetting(PopularProperties.CLUSTER_NAME, clusterName)
-    .build()
-    .start()
-
 }
