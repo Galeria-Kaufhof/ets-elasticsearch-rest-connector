@@ -1,4 +1,4 @@
-package de.kaufhof.ets.elasticsearchrestconnector.core.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries
 
 import play.api.libs.json.{JsNumber, JsValue, Writes}
 

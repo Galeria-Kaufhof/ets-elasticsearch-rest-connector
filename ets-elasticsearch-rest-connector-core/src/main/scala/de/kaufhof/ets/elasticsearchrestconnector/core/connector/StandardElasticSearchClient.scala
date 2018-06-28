@@ -5,7 +5,7 @@ import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.hits.ElasticS
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.{BulkOperationResult, IndexedDocument}
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.MappingObject
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.percolate.PercolateDocument
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.DeleteDocumentByQueryWrapper
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.{DeleteDocumentByQueryWrapper, QueryObject}
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queryTypes.Query
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results._
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.services.JsonToMappingResultConverter
