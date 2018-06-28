@@ -1,6 +1,6 @@
-package de.kaufhof.ets.elasticsearchrestconnector.core.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries
 
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.aggregations.query.{Aggregation, ChildAggregation}
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.aggregations.query.Aggregation
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.querySources.{BaseSourceBoolean, QueryBaseSource}
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queryTypes.Query
 import play.api.libs.json._

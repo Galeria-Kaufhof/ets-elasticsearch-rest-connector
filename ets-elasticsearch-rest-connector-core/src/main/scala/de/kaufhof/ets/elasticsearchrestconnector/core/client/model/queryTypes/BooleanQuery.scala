@@ -1,8 +1,7 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queryTypes
 
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.filters.FilterExpression
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.{MatchAllQuery, QueryExpression}
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.{QueryListBool, QueryType}
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.{MatchAllQuery, QueryExpression, QueryListBool, QueryType}
 import play.api.libs.json.{JsArray, JsObject, JsValue, Writes}
 
 case class BooleanQuery(query: QueryListBool = QueryListBool(), filter: List[FilterExpression] = Nil) extends QueryType

@@ -1,8 +1,6 @@
-package de.kaufhof.ets.elasticsearchrestconnector.core.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries
 
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.filters.FilterExpression
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.{MatchAllQuery, QueryExpression}
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queryTypes.BooleanQuery
 import play.api.libs.json.{JsArray, JsObject, JsValue, Writes}
 
 case class QueryListBool(

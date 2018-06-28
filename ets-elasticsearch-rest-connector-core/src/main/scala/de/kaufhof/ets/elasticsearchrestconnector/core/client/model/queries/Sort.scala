@@ -1,8 +1,8 @@
-package de.kaufhof.ets.elasticsearchrestconnector.core.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries
 
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.SortMode.SortMode
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.SortOrder.SortOrder
-import play.api.libs.json.{JsValue, Json, OFormat, Writes}
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.SortMode.SortMode
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.SortOrder.SortOrder
+import play.api.libs.json.{JsValue, Json, Writes}
 
 case class Sort(fieldName: String, order: SortOrder = SortOrder.Ascending, sortMode: SortMode = SortMode.Avg)
 

@@ -1,6 +1,5 @@
-package de.kaufhof.ets.elasticsearchrestconnector.core.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries
 
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.filters.MatchAllFilter
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queryTypes.BooleanQuery
 import play.api.libs.json._
 
