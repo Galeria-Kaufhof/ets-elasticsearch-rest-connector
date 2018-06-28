@@ -7,6 +7,7 @@ import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.Mappi
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.percolate.PercolateDocument
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.DeleteDocumentByQueryWrapper
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queryTypes.Query
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results._
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.services.JsonToMappingResultConverter
 import org.elasticsearch.client.RestClient
 import play.api.libs.json._

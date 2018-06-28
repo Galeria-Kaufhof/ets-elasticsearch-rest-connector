@@ -1,4 +1,4 @@
-package de.kaufhof.ets.elasticsearchrestconnector.core.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results
 
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.aggregations.result.AggregationResults
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.hits.ElasticSearchHits

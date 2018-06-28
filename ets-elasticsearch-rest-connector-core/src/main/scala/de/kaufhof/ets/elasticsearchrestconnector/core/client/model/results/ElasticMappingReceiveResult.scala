@@ -1,4 +1,4 @@
-package de.kaufhof.ets.elasticsearchrestconnector.core.client.model
+package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results
 
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.MappingValue
 

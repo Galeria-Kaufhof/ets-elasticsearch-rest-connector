@@ -1,7 +1,7 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.client.services
 
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.ElasticMappingReceiveResult
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.MappingValue
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results.ElasticMappingReceiveResult
 import play.api.libs.json.{JsObject, JsValue}
 
 object JsonToMappingResultConverter {
