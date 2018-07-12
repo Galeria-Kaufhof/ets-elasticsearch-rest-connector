@@ -21,7 +21,8 @@ class MappingObjectTest extends WordSpec with Matchers {
                               |    },
                               |    "index.mapping.total_fields.limit" : 1000,
                               |    "number_of_shards" : 5,
-                              |    "number_of_replicas" : 1
+                              |    "number_of_replicas" : 1,
+                              |    "index.max_result_window" : 10000
                               |  }
                               |}""".stripMargin
 
