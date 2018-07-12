@@ -12,7 +12,8 @@ class IndexSettingsTest extends WordSpec with Matchers {
                        |  "analysis" : { },
                        |  "index.mapping.total_fields.limit" : 1000,
                        |  "number_of_shards" : 5,
-                       |  "number_of_replicas" : 1
+                       |  "number_of_replicas" : 1,
+                       |  "index.max_result_window" : 10000
                        |}""".stripMargin
 
       val testee = IndexSettings.writes.writes(IndexSettings())
@@ -33,10 +34,11 @@ class IndexSettingsTest extends WordSpec with Matchers {
                                |  },
                                |  "index.mapping.total_fields.limit" : 1,
                                |  "number_of_shards" : 10,
-                               |  "number_of_replicas" : 100
+                               |  "number_of_replicas" : 100,
+                               |  "index.max_result_window" : 100
                                |}""".stripMargin
 
-      val settings: IndexSettings = IndexSettings(analyzer = Some(List(CustomAnalyzer("custom", "tokenizer1", List("element1", "element2")))), totalFieldLimit = 1, numberOfShards = 10, numberOfReplicas = 100)
+      val settings: IndexSettings = IndexSettings(analyzer = Some(List(CustomAnalyzer("custom", "tokenizer1", List("element1", "element2")))), totalFieldLimit = 1, numberOfShards = 10, numberOfReplicas = 100, indexMaxResultWindow = 100)
 
       val testee = IndexSettings.writes.writes(settings)
       Json.prettyPrint(testee) shouldEqual compared

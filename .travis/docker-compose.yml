@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.0
@@ -12,3 +12,13 @@ services:
     ports:
       - "9310:9300"
       - "9210:9200"
+    networks:
+      defaultEnvironment:
+        ipv4_address: 172.16.239.10
+networks:
+  defaultEnvironment:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.16.239.11/30
+#        gateway: 172.16.239.9 # in version 3 of docker-compose, the keyword gateway is not supported https://docs.docker.com/compose/compose-file/#ipam
