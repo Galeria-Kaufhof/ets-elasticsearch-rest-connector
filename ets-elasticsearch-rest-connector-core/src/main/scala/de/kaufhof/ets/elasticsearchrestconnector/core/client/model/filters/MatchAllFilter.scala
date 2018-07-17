@@ -1,3 +1,11 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.filters
 
-case class MatchAllFilter() extends FilterExpression
+import play.api.libs.json.{JsObject, Json}
+
+case class MatchAllFilter() extends FilterExpression {
+  override def toJsonObject: JsObject = {
+    Json.obj(
+      "match_all" -> Json.obj()
+    )
+  }
+}
