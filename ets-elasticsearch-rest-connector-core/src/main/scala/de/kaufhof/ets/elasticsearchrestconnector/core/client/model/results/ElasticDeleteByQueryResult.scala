@@ -13,7 +13,6 @@ object ElasticDeleteByQueryResultRetries {
 case class ElasticDeleteByQueryResult(
                                        override val throwable: Option[Throwable] = None,
                                        _index: String,
-                                       _type: String,
                                        took: Long = 0,
                                        timed_out: Option[Boolean] = None,
                                        deleted: Long = 0,
@@ -28,11 +27,10 @@ case class ElasticDeleteByQueryResult(
                                      ) extends ElasticResult
 
 object ElasticDeleteByQueryResult{
-  def apply(jsResult: JsValue, index: String, _type: String): ElasticDeleteByQueryResult = {
+  def apply(jsResult: JsValue, index: String): ElasticDeleteByQueryResult = {
     ElasticDeleteByQueryResult(
       throwable = None,
       _index = index,
-      _type = _type,
       took = (jsResult \ "took").asOpt[Long].getOrElse(9),
       timed_out = (jsResult \ "timed_out").asOpt[Boolean],
       deleted = (jsResult \ "deleted").as[Long],

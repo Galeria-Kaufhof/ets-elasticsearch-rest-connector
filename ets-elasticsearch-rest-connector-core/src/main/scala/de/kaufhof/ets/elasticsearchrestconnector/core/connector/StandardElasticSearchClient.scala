@@ -2,7 +2,7 @@ package de.kaufhof.ets.elasticsearchrestconnector.core.connector
 
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.hits.ElasticSearchHits
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.{BulkOperationResult, IndexedDocument}
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.MappingObject
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.{EnumMappingTypes, MappingObject}
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.percolate.PercolateDocument
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.{DeleteDocumentByQueryWrapper, QueryObject}
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queryTypes.Query
@@ -91,8 +91,8 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
 
   }
 
-  def search(indexName: String, documentType: String, query: QueryObject): Future[ElasticSearchResult] = {
-    val endpoint: String = s"/${urlEncodePathEntity(indexName)}/$documentType/_search"
+  def search(indexName: String, query: QueryObject): Future[ElasticSearchResult] = {
+    val endpoint: String = s"/${urlEncodePathEntity(indexName)}/_search"
     restClient.postJson(endpoint, query.asJsObject, compressCommunication).map(JsonToSearchResultConverter(_)).recover {
       case ex: Throwable =>
         ElasticSearchResult(
@@ -105,8 +105,8 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     }
   }
 
-  def getMapping(indexName: String, documentType: String): Future[ElasticMappingReceiveResult] = {
-    val endpoint: String = s"/${urlEncodePathEntity(indexName)}/$documentType/_mapping"
+  def getMapping(indexName: String): Future[ElasticMappingReceiveResult] = {
+    val endpoint: String = s"/${urlEncodePathEntity(indexName)}/_mapping"
     restClient.getJson(endpoint, compressCommunication).map(JsonToMappingResultConverter(_)).recover {
       case ex: Throwable =>
         ElasticMappingReceiveResult(
@@ -237,8 +237,8 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     }
   }
 
-  def insertDocument(indexName: String, documentType: String, id: String, document: JsObject): Future[ElasticInsertDocumentResult] = {
-    val endpoint: String = s"${urlEncodePathEntity(indexName)}/$documentType/$id"
+  def insertDocument(indexName: String, id: String, document: JsObject): Future[ElasticInsertDocumentResult] = {
+    val endpoint: String = s"${urlEncodePathEntity(indexName)}/$id"
     val content: String = Json.stringify(document) + "\n"
     restClient.putJson(endpoint, content, compressed = compressCommunication).map { jsResult =>
       ElasticInsertDocumentResult(jsResult)
@@ -247,7 +247,7 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
         ElasticInsertDocumentResult(
           throwable = Some(ex),
           _index = indexName,
-          _type = documentType,
+          _type = "",
           _id = id
         )
     }
@@ -271,24 +271,23 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     }
   }
 
-  def deleteDocumentByQuery(indexName: String, documentType: String, query: Query): Future[ElasticDeleteByQueryResult] = {
-    val endpoint: String = s"${urlEncodePathEntity(indexName)}/$documentType/_delete_by_query"
+  def deleteDocumentByQuery(indexName: String, query: Query): Future[ElasticDeleteByQueryResult] = {
+    val endpoint: String = s"${urlEncodePathEntity(indexName)}/_delete_by_query"
     val queryContent: JsValue = DeleteDocumentByQueryWrapper(query)
     restClient.postJson(endpoint, queryContent, compressed = compressCommunication).map { jsResult =>
-      ElasticDeleteByQueryResult(jsResult, indexName, documentType)
+      ElasticDeleteByQueryResult(jsResult, indexName)
     }.recover {
       case ex: Throwable =>
         ElasticDeleteByQueryResult(
           throwable = Some(ex),
           _index = indexName,
-          _type = documentType,
           total = 0
         )
     }
   }
 
-  def deleteDocument(indexName: String, documentType: String, id: String): Future[ElasticDeleteDocumentResult] = {
-    val endpoint: String = s"${urlEncodePathEntity(indexName)}/$documentType/$id"
+  def deleteDocument(indexName: String, id: String): Future[ElasticDeleteDocumentResult] = {
+    val endpoint: String = s"${urlEncodePathEntity(indexName)}/$id"
     restClient.delete(endpoint, compressCommunication).map { jsResult =>
       ElasticDeleteDocumentResult(
         throwable = None,
@@ -303,11 +302,9 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     }
   }
 
-  def registerPercolatorQuery(indexName: String, percolateDocument: PercolateDocument): Future[ElasticPercolateRegisterResult] = {
-    val typeName = "variant"
+  def registerPercolatorQuery(indexName: String, typeName: String, percolateDocument: PercolateDocument): Future[ElasticPercolateRegisterResult] = {
     val endpoint: String = s"/${urlEncodePathEntity(indexName)}/$typeName/${urlEncodePathEntity(percolateDocument.id)}"
-    val document = percolateDocument.document + ("type" -> JsString("percolator"))
-    restClient.postJson(endpoint, document, compressCommunication).map { jsValue =>
+    restClient.postJson(endpoint, percolateDocument.document, compressCommunication).map { jsValue =>
       ElasticPercolateRegisterResult(
         created = (jsValue \ "result").asOpt[String].exists("created" ==),
         version = (jsValue \ "_version").asOpt[Int].getOrElse(0),
@@ -325,8 +322,7 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     }
   }
 
-  def unregisterPercolatorQuery(indexName: String, id: String): Future[ElasticPercolateUnregisterResult] = {
-    val typeName: String = "variant"
+  def unregisterPercolatorQuery(indexName: String, typeName: String, id: String): Future[ElasticPercolateUnregisterResult] = {
     val endpoint: String = s"${urlEncodePathEntity(indexName)}/$typeName/${urlEncodePathEntity(id)}"
     restClient.delete(endpoint, compressCommunication).map { jsResult =>
       ElasticPercolateUnregisterResult(
@@ -342,7 +338,7 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     }
   }
 
-  def findRegisteredQueries(indexName: String, typeName: String, document: JsValue): Future[ElasticPercolateResult] = {
+  def findRegisteredQueries(indexName: String, document: JsValue): Future[ElasticPercolateResult] = {
     val endpoint: String = s"${urlEncodePathEntity(indexName)}/_search"
 
     restClient.getJson(endpoint, document, compressCommunication).map { jsResult =>
