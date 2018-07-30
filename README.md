@@ -4,7 +4,7 @@
 
 ## description
 The connector uses the RESTful api of an elastic-server to .
-Currently it supports the elastic-version 6.2.2
+Currently it supports the elastic-version 6.3.1
 
 ## initialization
 first of all, you need an uri to the elasticsearch server or cluster contact node.
