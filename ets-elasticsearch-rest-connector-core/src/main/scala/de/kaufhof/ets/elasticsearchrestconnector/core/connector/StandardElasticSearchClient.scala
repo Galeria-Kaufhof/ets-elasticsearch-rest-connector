@@ -1,8 +1,8 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.connector
 
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.hits.ElasticSearchHits
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.{BulkOperationResult, IndexedDocument}
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.{EnumMappingTypes, MappingObject}
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.{BulkOperationResult, BulkDocument}
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.MappingObject
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.percolate.PercolateDocument
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.{DeleteDocumentByQueryWrapper, QueryObject}
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queryTypes.Query
@@ -253,16 +253,20 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     }
   }
 
-  def bulkInsertDocuments(documents: List[IndexedDocument]): Future[ElasticBulkInsertResult] = {
+  def bulkOperateDocuments(documents: List[BulkDocument]): Future[ElasticBulkResult] = {
     val endpoint: String = s"/_bulk"
     val bodyContent: String = documents.map { indexedDocument =>
-      Json.stringify(indexedDocument.docHeader) + "\n" + Json.stringify(indexedDocument.document)
+      indexedDocument.optionalDocument match {
+        case Some(document) => Json.stringify(indexedDocument.docHeader) + "\n" + Json.stringify(document)
+        case _ => Json.stringify(indexedDocument.docHeader)
+      }
     } mkString "\n"
+
     restClient.putJson(endpoint, bodyContent + "\n", compressed = compressCommunication).map { jsResult =>
-      ElasticBulkInsertResult(jsResult.as[JsObject])
+      ElasticBulkResult(jsResult.as[JsObject])
     }.recover {
       case ex: Throwable =>
-        ElasticBulkInsertResult(
+        ElasticBulkResult(
           throwable = Some(ex),
           took = 0,
           errors = true,
