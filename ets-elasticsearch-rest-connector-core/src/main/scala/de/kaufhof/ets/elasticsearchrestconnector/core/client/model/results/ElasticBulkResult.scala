@@ -3,7 +3,7 @@ package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.BulkOperationResult
 import play.api.libs.json.JsObject
 
-case class ElasticBulkInsertResult(
+case class ElasticBulkResult(
                                     override val throwable: Option[Throwable],
                                     took: Long,
                                     errors: Boolean,
@@ -11,10 +11,10 @@ case class ElasticBulkInsertResult(
                                   ) extends ElasticResult
 
 
-object ElasticBulkInsertResult {
+object ElasticBulkResult {
 
-  def apply(o: JsObject): ElasticBulkInsertResult = {
-    ElasticBulkInsertResult(
+  def apply(o: JsObject): ElasticBulkResult = {
+    ElasticBulkResult(
       throwable = None,
       took = (o \ "took").as[Long],
       errors = (o \ "errors").as[Boolean],
