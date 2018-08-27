@@ -1,6 +1,6 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.integration
 
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.{IndexSettings, Mapping, MappingObject}
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.{IndexSettings, MappingObject}
 import org.scalatest._
 import utils.{ElasticSearchTestClient, FutureFixture}
 
@@ -47,7 +47,7 @@ class ElasticSearchIndexOperationsTest extends WordSpec with Matchers with Elast
   }
 
   private def createIndex(indexName: String): Boolean = {
-    await(standardElasticSearchClient.createIndex(MappingObject(indexName, List.empty[Mapping], IndexSettings())).map(_.created))
+    await(standardElasticSearchClient.createIndex(MappingObject(indexName, None, IndexSettings())).map(_.created))
   }
 
   private def deleteIndex(indexName: String): Boolean = {

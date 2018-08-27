@@ -75,7 +75,7 @@ class ElasticTemplateOperationsTest extends WordSpec with Matchers with ElasticS
   }
 
   def createIndexWithDefaults(indexName: String): Boolean = {
-    await(standardElasticSearchClient.createIndex(MappingObject(indexName, List(Mapping("mapping1", MappingType.Strict, dateDetection = false, numericDetection = false, dynamicTemplates = List(), properties = List())), IndexSettings()))).created
+    await(standardElasticSearchClient.createIndex(MappingObject(indexName, Some(Mapping("mapping1", MappingType.Strict, dateDetection = false, numericDetection = false, dynamicTemplates = List(), properties = List())), IndexSettings()))).created
   }
 
   def getIndexValueFieldLimit(indexName:String): Int = {

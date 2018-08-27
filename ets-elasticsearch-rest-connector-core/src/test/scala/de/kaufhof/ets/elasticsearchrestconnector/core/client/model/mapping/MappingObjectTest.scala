@@ -27,7 +27,7 @@ class MappingObjectTest extends WordSpec with Matchers {
                               |}""".stripMargin
 
 
-      val o: MappingObject = MappingObject("iName", List.empty[Mapping], settings = IndexSettings(analyzer = Some(List(CustomAnalyzer("analyzerName", "tokenizer", List("filter1", "filter2"))))))
+      val o: MappingObject = MappingObject("iName", None, settings = IndexSettings(analyzer = Some(List(CustomAnalyzer("analyzerName", "tokenizer", List("filter1", "filter2"))))))
 
       val testee = MappingObject.writes.writes(o)
 
