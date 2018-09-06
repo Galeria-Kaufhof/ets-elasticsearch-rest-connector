@@ -1,14 +1,24 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results
 
-import play.api.libs.json.{JsValue, Json, Reads, Writes}
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results
+import play.api.libs.json._
+
 
 case class ElasticDeleteByQueryResultRetries(bulk: Long, search: Long)
 
-object ElasticDeleteByQueryResultRetries {
-  implicit val reads: Reads[ElasticDeleteByQueryResultRetries] = Json.reads[ElasticDeleteByQueryResultRetries]
-  implicit val writes: Writes[ElasticDeleteByQueryResultRetries] = Json.writes[ElasticDeleteByQueryResultRetries]
-}
+object ElasticDeleteByQueryResultRetries{
+  implicit val reads: Reads[ElasticDeleteByQueryResultRetries] = new Reads[ElasticDeleteByQueryResultRetries] {
+    override def reads(json: JsValue): JsResult[ElasticDeleteByQueryResultRetries] = {
+      JsSuccess(
+        ElasticDeleteByQueryResultRetries(
+          bulk = (json \ "bulk").as[Long],
+          search = (json \ "search").as[Long]
+        )
+      )
+    }
+  }
 
+}
 
 case class ElasticDeleteByQueryResult(
                                        override val throwable: Option[Throwable] = None,
