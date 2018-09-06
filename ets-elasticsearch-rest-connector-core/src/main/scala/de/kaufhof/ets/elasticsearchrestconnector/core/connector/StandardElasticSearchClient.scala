@@ -1,7 +1,7 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.connector
 
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.hits.ElasticSearchHits
-import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.{BulkOperationResult, BulkDocument}
+import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.indexing.{BulkDocument, BulkOperationResult}
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.mapping.MappingObject
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.percolate.PercolateDocument
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queries.{DeleteDocumentByQueryWrapper, QueryObject}
@@ -9,6 +9,7 @@ import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.queryTypes.Qu
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results._
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.template.IndexTemplate
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.services.JsonToMappingResultConverter
+import de.kaufhof.ets.elasticsearchrestconnector.core.stream.ScrollApiRequest
 import org.elasticsearch.client.RestClient
 import play.api.libs.json._
 
@@ -91,16 +92,32 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
 
   }
 
-  def search(indexName: String, query: QueryObject): Future[ElasticSearchResult] = {
+  def search(indexName: String, query: QueryObject, queryParams: Seq[(String, String)]): Future[ElasticSearchResult] = {
     val endpoint: String = s"/${urlEncodePathEntity(indexName)}/_search"
-    restClient.postJson(endpoint, query.asJsObject, compressCommunication).map(JsonToSearchResultConverter(_)).recover {
+    restClient.postJson(endpoint, query.asJsObject, compressCommunication, queryParams:_*).map(JsonToSearchResultConverter(_)).recover {
       case ex: Throwable =>
         ElasticSearchResult(
           took = -1,
           hits = ElasticSearchHits(Seq.empty),
           total = 0,
           aggregations = None,
-          throwable = Some(ex)
+          throwable = Some(ex),
+          scrollIdOpt = None
+        )
+    }
+  }
+
+  def continuedScrollSearch(parameter: ScrollApiRequest): Future[ElasticSearchResult] = {
+    val endpoint: String = "/_search/scroll"
+    restClient.postJson(endpoint, parameter.toJson, compressCommunication).map(JsonToSearchResultConverter(_)).recover {
+      case ex: Throwable =>
+        ElasticSearchResult(
+          took = -1,
+          hits = ElasticSearchHits(Seq.empty),
+          total = 0,
+          aggregations = None,
+          throwable = Some(ex),
+          scrollIdOpt = None
         )
     }
   }
@@ -290,9 +307,9 @@ class StandardElasticSearchClient(restClient: RestClient)(implicit val ec: Execu
     }
   }
 
-  def deleteDocument(indexName: String, id: String): Future[ElasticDeleteDocumentResult] = {
-    val endpoint: String = s"${urlEncodePathEntity(indexName)}/$id"
-    restClient.delete(endpoint, compressCommunication).map { jsResult =>
+  def deleteDocument(indexName: String, id: String, documentType: String, queryParameters: Seq[(String, String)]): Future[ElasticDeleteDocumentResult] = {
+    val endpoint: String = s"${urlEncodePathEntity(indexName)}/$documentType/$id"
+    restClient.delete(endpoint, compressCommunication, queryParameters:_*).map { jsResult =>
       ElasticDeleteDocumentResult(
         throwable = None,
         found = (jsResult \ "found").asOpt[Boolean].getOrElse(false)

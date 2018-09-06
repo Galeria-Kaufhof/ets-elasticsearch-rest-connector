@@ -3,6 +3,7 @@ package de.kaufhof.ets.elasticsearchrestconnector.core.connector
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.aggregations.result.AggregationResults
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.hits.{ElasticSearchHits, Hit, HitSource}
 import de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results.ElasticSearchResult
+import de.kaufhof.ets.elasticsearchrestconnector.core.stream.ScrollId
 import play.api.libs.json._
 
 object JsonToSearchResultConverter {
@@ -11,6 +12,7 @@ object JsonToSearchResultConverter {
   private final val _hits: String = "hits"
   private final val _took: String = "took"
   private final val _total: String = "total"
+  private final val _scroll_id: String = "_scroll_id"
 
   def apply(json: JsValue): ElasticSearchResult = {
     val results: Seq[JsValue] = (json \ _hits \ _hits).as[Seq[JsValue]]
@@ -19,12 +21,14 @@ object JsonToSearchResultConverter {
     val maybeAggregations: Option[AggregationResults] = Json.fromJson[AggregationResults](json).asOpt
     val took: Long = (json \ _took).as[Long]
     val total: Long = (json \ _hits \ _total).as[Long]
+    val scrollIdOpt: Option[ScrollId] = (json \ _scroll_id).asOpt[String].map(ScrollId)
     ElasticSearchResult(
       took = took,
       total = total,
       aggregations = maybeAggregations,
       hits = hitResults,
-      throwable = None
+      throwable = None,
+      scrollIdOpt = scrollIdOpt
     )
 
   }
