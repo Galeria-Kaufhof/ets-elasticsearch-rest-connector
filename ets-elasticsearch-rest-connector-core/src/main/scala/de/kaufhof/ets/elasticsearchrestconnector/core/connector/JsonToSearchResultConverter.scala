@@ -27,7 +27,6 @@ object JsonToSearchResultConverter {
       total = total,
       aggregations = maybeAggregations,
       hits = hitResults,
-      throwable = None,
       scrollIdOpt = scrollIdOpt
     )
 

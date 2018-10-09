@@ -14,10 +14,7 @@ object JsonToMappingResultConverter {
       }
     } toList
 
-    ElasticMappingReceiveResult(
-      mappingValues = mappingValues,
-      throwable = None
-    )
+    ElasticMappingReceiveResult(mappingValues = mappingValues)
   }
 
 

@@ -1,8 +1,5 @@
 package de.kaufhof.ets.elasticsearchrestconnector.core.client.model.results
 
-case class ElasticPercolateRegisterResult(
-                                           override val throwable: Option[Throwable],
-                                           created: Boolean,
+case class ElasticPercolateRegisterResult(created: Boolean,
                                            version: Int,
-                                           id: String
-                                         ) extends ElasticResult
+                                           id: String)
