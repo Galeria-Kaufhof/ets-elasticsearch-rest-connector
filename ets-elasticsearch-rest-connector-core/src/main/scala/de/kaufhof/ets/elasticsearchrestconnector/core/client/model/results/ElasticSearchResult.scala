@@ -9,6 +9,5 @@ case class ElasticSearchResult(
                                 hits: ElasticSearchHits,
                                 total: Long,
                                 aggregations: Option[AggregationResults],
-                                scrollIdOpt: Option[ScrollId],
-                                override val throwable: Option[Throwable]
-                              ) extends ElasticResult
+                                scrollIdOpt: Option[ScrollId]
+                              )
